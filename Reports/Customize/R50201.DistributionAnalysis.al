@@ -10,7 +10,7 @@ report 50201 "Distribution Analysis"
         dataitem(DistributionRule; "Distribution Rule")
         {
             RequestFilterFields = "Posting Date", "G/L Account No.", "Shortcut Dimension 2 Code",
-                 "Shortcut Dimension 3 Code", "Shortcut Dimension 1 Code", "Document No.", "Entry No.";
+                 "Shortcut Dimension 3 Code", "Shortcut Dimension 1 Code", "Document No.", "Team Leader No.", "Manager No.";
 
             trigger OnPreDataItem()
             begin
@@ -43,7 +43,7 @@ report 50201 "Distribution Analysis"
             begin
                 Clear(TempDistRule);
                 TempDistRule.SetCurrentKey("G/L Account No.", "Posting Date",
-                    "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Shortcut Dimension 3 Code", "Document No.", "Entry No.");
+                    "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Shortcut Dimension 3 Code", "Document No.", "Entry No.", "Team Leader No.", "Manager No.");
             end;
         }
         dataitem(IntegerLoop; Integer)
@@ -101,6 +101,22 @@ report 50201 "Distribution Analysis"
             {
 
             }
+            column(TempDistRuleteamleaderNo; TempDistRule."Team Leader No.")
+            {
+
+            }
+            column(TempDistRuleteamleaderName; TempDistRule."Team Leader")
+            {
+
+            }
+            column(TempDistRuleManagerNo; TempDistRule."Manager No.")
+            {
+
+            }
+            column(TempDistRuleManagerName; TempDistRule.Manager)
+            {
+
+            }
             column(TotalAmount; TotalAmount)
             {
 
@@ -153,6 +169,7 @@ report 50201 "Distribution Analysis"
                 if ((DistributionRules."Account Category"::Income) = DistributionRules."Account Category") then begin
                     CreditAmountAllocated := DistributionRules."Amount Allocated";
                 end;
+
                 TotalAmount += CreditAmountAllocated2 - DebitAmountAllocated2;
                 Commit();
             end;
@@ -176,11 +193,22 @@ report 50201 "Distribution Analysis"
     end;
 
     local procedure InitDistributiomRuleTemp()
+    var
+        DistributionLine: Record "Distribution Line";
+        DimensionValue: Record "Dimension Value";
+        TeamleaderNoAndNameInsStr, ManagerNoAndNameInsStr : Text;
+        TeamleaderNoStrLen, TeamleaderNoStrLenInc, ManagerNoStrLen, ManagerNoStrLenInc : Integer;
     begin
         Inx += 1;
         Clear(TempDistRule);
         Clear(CreditAmountAllocated);
         Clear(DebitAmountAllocated);
+        Clear(TeamleaderNoAndNameInsStr);
+        Clear(ManagerNoAndNameInsStr);
+        Clear(TeamleaderNoStrLen);
+        Clear(TeamleaderNoStrLenInc);
+        Clear(ManagerNoStrLen);
+        Clear(ManagerNoStrLenInc);
         TempDistRule."Entry No." := DistributionRule."Entry No.";
         TempDistRule."Line No." := Inx;
         TempDistRule."G/L Account No." := DistributionRule."G/L Account No.";
@@ -195,6 +223,15 @@ report 50201 "Distribution Analysis"
             DebitAmountAllocated2 += DistributionRule."Amount Allocated";
         end else
             CreditAmountAllocated2 += DistributionRule."Amount Allocated";
+
+        TeamleaderNoStrLen := StrLen(DistributionRule."Team Leader No.");
+        TeamleaderNoStrLenInc := (TeamleaderNoStrLen + 3);
+        TeamleaderNoAndNameInsStr := InsStr(DistributionRule."Team leader No.", DistributionRule."Team Leader", TeamleaderNoStrLenInc);
+        TempDistRule."Team Leader No." := TeamleaderNoAndNameInsStr;
+        ManagerNoStrLen := StrLen(DistributionRule."Manager No.");
+        ManagerNoStrLenInc := (ManagerNoStrLen + 3);
+        ManagerNoAndNameInsStr := InsStr(DistributionRule."Manager No.", DistributionRule.Manager, ManagerNoStrLenInc);
+        TempDistRule."Manager No." := ManagerNoAndNameInsStr;
         TempDistRule.Insert(false);
         Commit();
     end;
@@ -204,11 +241,12 @@ report 50201 "Distribution Analysis"
         GLEntry: Record "G/L Entry";
         GLAccount: Record "G/L Account";
         TempDistRule: Record "Distribution Rule" temporary;
+        UserCustomizeManage: Codeunit "User Customize Manage";
         DebitAmountAllocated: Decimal;
         CreditAmountAllocated: Decimal;
         DebitAmountAllocated2: Decimal;
         CreditAmountAllocated2: Decimal;
-        TxtFilter: Text;
+        TxtFilter, DistributionYear, DistributionMonth : Text;
         EmpName: Text[100];
         GLAccName: Text[100];
         Inx: Integer;

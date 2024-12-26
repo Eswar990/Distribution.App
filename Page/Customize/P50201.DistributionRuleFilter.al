@@ -364,6 +364,10 @@ page 50201 "Distribution Rule Filter"
                                             end else
                                                 DistributionRule."Account Category" := GLEntry."Account Category";
 
+                                            DistributionRule."Team Leader No." := DistributionLines."Team leader No.";
+                                            DistributionRule."Team Leader" := DistributionLines."Team Leader";
+                                            DistributionRule."Manager No." := DistributionLines."Manager No.";
+                                            DistributionRule.Manager := DistributionLines.Manager;
                                             DistributionRule.Modify(false);
                                         end;
 
@@ -380,6 +384,10 @@ page 50201 "Distribution Rule Filter"
                                             end else
                                                 DistributionRule."Account Category" := GLEntry."Account Category";
 
+                                            DistributionRule."Team Leader No." := DistributionLines."Team leader No.";
+                                            DistributionRule."Team Leader" := DistributionLines."Team Leader";
+                                            DistributionRule."Manager No." := DistributionLines."Manager No.";
+                                            DistributionRule.Manager := DistributionLines.Manager;
                                             DistributionRule.Modify(false);
                                         end;
 
@@ -396,6 +404,10 @@ page 50201 "Distribution Rule Filter"
                                             end else
                                                 DistributionRule."Account Category" := GLEntry."Account Category";
 
+                                            DistributionRule."Team Leader No." := DistributionLines."Team leader No.";
+                                            DistributionRule."Team Leader" := DistributionLines."Team Leader";
+                                            DistributionRule."Manager No." := DistributionLines."Manager No.";
+                                            DistributionRule.Manager := DistributionLines.Manager;
                                             DistributionRule.Modify(false);
                                         end;
 
@@ -412,6 +424,10 @@ page 50201 "Distribution Rule Filter"
                                             end else
                                                 DistributionRule."Account Category" := GLEntry."Account Category";
 
+                                            DistributionRule."Team Leader No." := DistributionLines."Team leader No.";
+                                            DistributionRule."Team Leader" := DistributionLines."Team Leader";
+                                            DistributionRule."Manager No." := DistributionLines."Manager No.";
+                                            DistributionRule.Manager := DistributionLines.Manager;
                                             DistributionRule.Modify(false);
                                         end;
 
@@ -428,6 +444,10 @@ page 50201 "Distribution Rule Filter"
                                             end else
                                                 DistributionRule."Account Category" := GLEntry."Account Category";
 
+                                            DistributionRule."Team Leader No." := DistributionLines."Team leader No.";
+                                            DistributionRule."Team Leader" := DistributionLines."Team Leader";
+                                            DistributionRule."Manager No." := DistributionLines."Manager No.";
+                                            DistributionRule.Manager := DistributionLines.Manager;
                                             DistributionRule.Modify(false);
                                         end;
 

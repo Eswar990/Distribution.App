@@ -101,6 +101,22 @@ page 50200 "Distribution Rule"
                     ToolTip = 'Specifies the value of the Emp. Project Count field.';
                     Visible = false;
                 }
+                field("Team Leader No."; Rec."Team Leader No.")
+                {
+                    ToolTip = 'Specifies the value of the Team Leader No. field.';
+                }
+                field("Team Leader"; Rec."Team Leader")
+                {
+                    ToolTip = 'Specifies the value of the Team Leader field.';
+                }
+                field("Manager No."; Rec."Manager No.")
+                {
+                    ToolTip = 'Specifies the value of the Manager No. field.';
+                }
+                field(Manager; Rec.Manager)
+                {
+                    ToolTip = 'Specifies the value of the Manager field.';
+                }
 
             }
             group("Allocation Details")

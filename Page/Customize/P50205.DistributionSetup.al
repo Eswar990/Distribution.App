@@ -114,8 +114,6 @@ page 50205 "Distribution Setup"
     end;
 
     trigger OnOpenPage()
-    var
-        myInt: Integer;
     begin
         Rec.Reset();
         if not Rec.Get() then begin

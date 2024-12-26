@@ -100,6 +100,24 @@ table 50200 "Distribution Rule"
             Caption = 'Account Category';
             Editable = false;
         }
+        field(23; "Team Leader"; Text[100])
+        {
+            Caption = 'Team Leader';
+        }
+        field(24; Manager; Text[100])
+        {
+            Caption = 'Manager';
+        }
+        field(25; "Team Leader No."; Text[50])
+        {
+            Caption = 'Team Leader No.';
+            TableRelation = "Dimension Value".Code where("Team Leader" = const(true));
+        }
+        field(26; "Manager No."; Text[50])
+        {
+            Caption = 'Manager No.';
+            TableRelation = "Dimension Value".Code where(Manager = const(true));
+        }
 
     }
     keys

@@ -112,6 +112,26 @@ table 50205 "Distribution Line"
             Caption = 'Percentage Five';
             Editable = false;
         }
+        field(16; "Team Leader"; Text[100])
+        {
+            Caption = 'Team Leader';
+            Editable = false;
+        }
+        field(17; Manager; Text[100])
+        {
+            Caption = 'Manager';
+            Editable = false;
+        }
+        field(18; "Team leader No."; Text[20])
+        {
+            Caption = 'Team leader No.';
+            Editable = false;
+        }
+        field(19; "Manager No."; Text[20])
+        {
+            Caption = 'Manager No.';
+            Editable = false;
+        }
     }
     keys
     {

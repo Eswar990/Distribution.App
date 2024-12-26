@@ -26,6 +26,25 @@ page 50206 "Distribution Subfrom"
                     ToolTip = 'Specifies the value of the Shortcut Dimension 1 Code field.';
                 }
 
+                field("Team Leader No."; Rec."Team leader No.")
+                {
+                    ToolTip = 'Specifies the value of the Team Leader No. field.', Comment = '%';
+                }
+
+                field("Team Leader"; Rec."Team Leader")
+                {
+                    ToolTip = 'Specifies the value of the Team Leader field.', Comment = '%';
+                }
+
+                field("Manager No."; Rec."Manager No.")
+                {
+                    ToolTip = 'Specifies the value of the Manager No. field.', Comment = '%';
+                }
+                field(Manager; Rec.Manager)
+                {
+                    ToolTip = 'Specifies the value of the Manager field.', Comment = '%';
+                }
+
                 field("Shortcut Dimension 2 Code"; Rec."Shortcut Dimension 2 Code")
                 {
                     ToolTip = 'Specifies the value of the Shortcut Dimension 2 Code field.';
