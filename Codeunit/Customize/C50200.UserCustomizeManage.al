@@ -36,8 +36,8 @@ codeunit 50200 "User Customize Manage"
         if (DimValue.Get(GenLedSetup."Global Dimension 1 Code", ShortDimCodeOne) = false) then
             exit;
 
-        ShortDimCodeTwo := DimValue."Shortcut Dimension 2 Code";
-        ShortDimCodeThree := DimValue."Shortcut Dimension 3 Code";
+        // ShortDimCodeTwo := DimValue."Shortcut Dimension 2 Code";
+        // ShortDimCodeThree := DimValue."Shortcut Dimension 3 Code";
     end;
 
     procedure InitDistributionProjectLine(EntryNo: Integer; DocNo: code[20]; NegValue: Boolean; DimTwoCode: Code[20]; DimOneCode: Code[20]; GLAccNo: code[20])
@@ -122,16 +122,16 @@ codeunit 50200 "User Customize Manage"
                     if OldDimValueTwoCode <> DimValueTwoCode then
                         Error('Branch code must be same.');
 
-                    DimValue.SetRange("Shortcut Dimension 2 Code", DimValueTwoCode);
-                    if DimValue.FindSet() then
-                        repeat
-                            if DimValue."Shortcut Dimension 3 Code" <> '' then
-                                CreateDistProjectValue(EntryNo, DimValueTwoCode, DimValue."Shortcut Dimension 3 Code", GLEntry."G/L Account No.");
-                            if DimValue."Shortcut Dimension 3 Two" <> '' then
-                                CreateDistProjectValue(EntryNo, DimValueTwoCode, DimValue."Shortcut Dimension 3 Two", GLEntry."G/L Account No.");
-                            if DimValue."Shortcut Dimension 3 Three" <> '' then
-                                CreateDistProjectValue(EntryNo, DimValueTwoCode, DimValue."Shortcut Dimension 3 Three", GLEntry."G/L Account No.");
-                        until DimValue.Next() = 0;
+                    // DimValue.SetRange("Shortcut Dimension 2 Code", DimValueTwoCode);
+                    // if DimValue.FindSet() then
+                    //     repeat
+                    //         if DimValue."Shortcut Dimension 3 Code" <> '' then
+                    //             CreateDistProjectValue(EntryNo, DimValueTwoCode, DimValue."Shortcut Dimension 3 Code", GLEntry."G/L Account No.");
+                    //         if DimValue."Shortcut Dimension 3 Two" <> '' then
+                    //             CreateDistProjectValue(EntryNo, DimValueTwoCode, DimValue."Shortcut Dimension 3 Two", GLEntry."G/L Account No.");
+                    //         if DimValue."Shortcut Dimension 3 Three" <> '' then
+                    //             CreateDistProjectValue(EntryNo, DimValueTwoCode, DimValue."Shortcut Dimension 3 Three", GLEntry."G/L Account No.");
+                    //     until DimValue.Next() = 0;
                 end;
         until GLEntry.Next() = 0;
         Commit();
@@ -189,21 +189,21 @@ codeunit 50200 "User Customize Manage"
             if (GLEntry."Debit Amount" <> 0) then begin
                 GenJrnlDebitedAmount := true;
                 // DistributionProjectLineInGeneralJournal(EntryNo, DimValueCode, DimValue."Shortcut Dimension 3 Code", GLAccNo, GenJrnlDebitedAmount);
-            end
-            else begin
-                DimValue.SetRange("Shortcut Dimension 2 Code", DimValueCode);
-                DimValue.SetRange("Distribute Enable", true);
-                if DimValue.FindSet() then
-                    repeat
-                        if DimValue."Shortcut Dimension 3 Code" <> '' then
-                            CreateDistProjectValue(EntryNo, DimValueCode, DimValue."Shortcut Dimension 3 Code", GLAccNo);
-                        if DimValue."Shortcut Dimension 3 Two" <> '' then
-                            CreateDistProjectValue(EntryNo, DimValueCode, DimValue."Shortcut Dimension 3 Two", GLAccNo);
-                        if DimValue."Shortcut Dimension 3 Three" <> '' then
-                            CreateDistProjectValue(EntryNo, DimValueCode, DimValue."Shortcut Dimension 3 Three", GLAccNo);
-                    until DimValue.Next() = 0;
-
             end;
+        // else begin
+        //     DimValue.SetRange("Shortcut Dimension 2 Code", DimValueCode);
+        //     DimValue.SetRange("Distribute Enable", true);
+        //     if DimValue.FindSet() then
+        //         repeat
+        //             if DimValue."Shortcut Dimension 3 Code" <> '' then
+        //                 CreateDistProjectValue(EntryNo, DimValueCode, DimValue."Shortcut Dimension 3 Code", GLAccNo);
+        //             if DimValue."Shortcut Dimension 3 Two" <> '' then
+        //                 CreateDistProjectValue(EntryNo, DimValueCode, DimValue."Shortcut Dimension 3 Two", GLAccNo);
+        //             if DimValue."Shortcut Dimension 3 Three" <> '' then
+        //                 CreateDistProjectValue(EntryNo, DimValueCode, DimValue."Shortcut Dimension 3 Three", GLAccNo);
+        //         until DimValue.Next() = 0;
+
+        // end;
     end;
 
     procedure DistributionProjectLinesArePopulatedFromDistributionSetup(GLEntry: Record "G/L Entry"; RecDimensionValue: Code[20]; GLAccNo: code[20]; Integer: Integer)
@@ -350,6 +350,10 @@ codeunit 50200 "User Customize Manage"
                 end else
                     DistributionRule."Account Category" := GLEntry."Account Category";
 
+                DistributionRule."Team Leader No." := DistributionLine."Team leader No.";
+                DistributionRule."Team Leader" := DistributionLine."Team Leader";
+                DistributionRule."Manager No." := DistributionLine."Manager No.";
+                DistributionRule.Manager := DistributionLine.Manager;
                 DistributionRule.Modify(false);
             end;
 
@@ -366,6 +370,10 @@ codeunit 50200 "User Customize Manage"
                 end else
                     DistributionRule."Account Category" := GLEntry."Account Category";
 
+                DistributionRule."Team Leader No." := DistributionLine."Team leader No.";
+                DistributionRule."Team Leader" := DistributionLine."Team Leader";
+                DistributionRule."Manager No." := DistributionLine."Manager No.";
+                DistributionRule.Manager := DistributionLine.Manager;
                 DistributionRule.Modify(false);
             end;
 
@@ -382,6 +390,10 @@ codeunit 50200 "User Customize Manage"
                 end else
                     DistributionRule."Account Category" := GLEntry."Account Category";
 
+                DistributionRule."Team Leader No." := DistributionLine."Team leader No.";
+                DistributionRule."Team Leader" := DistributionLine."Team Leader";
+                DistributionRule."Manager No." := DistributionLine."Manager No.";
+                DistributionRule.Manager := DistributionLine.Manager;
                 DistributionRule.Modify(false);
             end;
 
@@ -398,6 +410,10 @@ codeunit 50200 "User Customize Manage"
                 end else
                     DistributionRule."Account Category" := GLEntry."Account Category";
 
+                DistributionRule."Team Leader No." := DistributionLine."Team leader No.";
+                DistributionRule."Team Leader" := DistributionLine."Team Leader";
+                DistributionRule."Manager No." := DistributionLine."Manager No.";
+                DistributionRule.Manager := DistributionLine.Manager;
                 DistributionRule.Modify(false);
             end;
 
@@ -414,6 +430,10 @@ codeunit 50200 "User Customize Manage"
                 end else
                     DistributionRule."Account Category" := GLEntry."Account Category";
 
+                DistributionRule."Team Leader No." := DistributionLine."Team leader No.";
+                DistributionRule."Team Leader" := DistributionLine."Team Leader";
+                DistributionRule."Manager No." := DistributionLine."Manager No.";
+                DistributionRule.Manager := DistributionLine.Manager;
                 DistributionRule.Modify(false);
             end;
 
@@ -455,6 +475,11 @@ codeunit 50200 "User Customize Manage"
                             DistributionRule."Account Category" := GLEntry."Account Category";
                         end else
                             DistributionRule."Account Category" := GLEntry."Account Category";
+
+                        DistributionRule."Team Leader No." := DistributionLine."Team leader No.";
+                        DistributionRule."Team Leader" := DistributionLine."Team Leader";
+                        DistributionRule."Manager No." := DistributionLine."Manager No.";
+                        DistributionRule.Manager := DistributionLine.Manager;
                         DistributionRule.Modify(false);
                     end;
 
@@ -471,6 +496,10 @@ codeunit 50200 "User Customize Manage"
                         end else
                             DistributionRule."Account Category" := GLEntry."Account Category";
 
+                        DistributionRule."Team Leader No." := DistributionLine."Team leader No.";
+                        DistributionRule."Team Leader" := DistributionLine."Team Leader";
+                        DistributionRule."Manager No." := DistributionLine."Manager No.";
+                        DistributionRule.Manager := DistributionLine.Manager;
                         DistributionRule.Modify(false);
                     end;
 
@@ -487,6 +516,10 @@ codeunit 50200 "User Customize Manage"
                         end else
                             DistributionRule."Account Category" := GLEntry."Account Category";
 
+                        DistributionRule."Team Leader No." := DistributionLine."Team leader No.";
+                        DistributionRule."Team Leader" := DistributionLine."Team Leader";
+                        DistributionRule."Manager No." := DistributionLine."Manager No.";
+                        DistributionRule.Manager := DistributionLine.Manager;
                         DistributionRule.Modify(false);
                     end;
 
@@ -503,6 +536,10 @@ codeunit 50200 "User Customize Manage"
                         end else
                             DistributionRule."Account Category" := GLEntry."Account Category";
 
+                        DistributionRule."Team Leader No." := DistributionLine."Team leader No.";
+                        DistributionRule."Team Leader" := DistributionLine."Team Leader";
+                        DistributionRule."Manager No." := DistributionLine."Manager No.";
+                        DistributionRule.Manager := DistributionLine.Manager;
                         DistributionRule.Modify(false);
                     end;
 
@@ -519,6 +556,10 @@ codeunit 50200 "User Customize Manage"
                         end else
                             DistributionRule."Account Category" := GLEntry."Account Category";
 
+                        DistributionRule."Team Leader No." := DistributionLine."Team leader No.";
+                        DistributionRule."Team Leader" := DistributionLine."Team Leader";
+                        DistributionRule."Manager No." := DistributionLine."Manager No.";
+                        DistributionRule.Manager := DistributionLine.Manager;
                         DistributionRule.Modify(false);
                     end;
 
@@ -804,7 +845,7 @@ codeunit 50200 "User Customize Manage"
         DistProject."Entry No." := EntryNo;
         DistProject."Shortcut Dimension 2 Code" := DimValueTwoCode;
         DistProject."Shortcut Dimension 3 Code" := DimValueThreeCode;
-        DistProject."Emp. Count" := GetEmployeeCount(DimValueTwoCode, DimValueThreeCode);
+        // DistProject."Emp. Count" := GetEmployeeCount(DimValueTwoCode, DimValueThreeCode);
         DistProject."G/L Account No." := GLAccNo;
         DistProject."Line No." := 0;
         DistProject.Insert();
@@ -1271,23 +1312,23 @@ codeunit 50200 "User Customize Manage"
         exit(GLEntry."Credit Amount");
     end;
 
-    local procedure GetEmployeeCount(DimValueTwoCode: Code[20]; DimValueThreeCode: Code[20]): Integer
-    var
-        DimValue: Record "Dimension Value";
-        EmpCount: Integer;
-    begin
-        DimValue.SetRange("Shortcut Dimension 2 Code", DimValueTwoCode);
-        DimValue.SetRange("Distribute Enable", true);
-        DimValue.SetRange("Shortcut Dimension 3 Code", DimValueThreeCode);
-        EmpCount := DimValue.Count();
-        DimValue.SetRange("Shortcut Dimension 3 Code");
-        DimValue.SetRange("Shortcut Dimension 3 Two", DimValueThreeCode);
-        EmpCount += DimValue.Count();
-        DimValue.SetRange("Shortcut Dimension 3 Two");
-        DimValue.SetRange("Shortcut Dimension 3 Three", DimValueThreeCode);
-        EmpCount += DimValue.Count();
-        exit(EmpCount);
-    end;
+    // local procedure GetEmployeeCount(DimValueTwoCode: Code[20]; DimValueThreeCode: Code[20]): Integer
+    // var
+    //     DimValue: Record "Dimension Value";
+    //     EmpCount: Integer;
+    // begin
+    //     DimValue.SetRange("Shortcut Dimension 2 Code", DimValueTwoCode);
+    //     DimValue.SetRange("Distribute Enable", true);
+    //     DimValue.SetRange("Shortcut Dimension 3 Code", DimValueThreeCode);
+    //     EmpCount := DimValue.Count();
+    //     DimValue.SetRange("Shortcut Dimension 3 Code");
+    //     DimValue.SetRange("Shortcut Dimension 3 Two", DimValueThreeCode);
+    //     EmpCount += DimValue.Count();
+    //     DimValue.SetRange("Shortcut Dimension 3 Two");
+    //     DimValue.SetRange("Shortcut Dimension 3 Three", DimValueThreeCode);
+    //     EmpCount += DimValue.Count();
+    //     exit(EmpCount);
+    // end;
 
 
     procedure UpdateDistAmountManually(var DistRuleFilter: Record "Distribution Rule Filter"; FilterVal: Integer)
@@ -1407,7 +1448,7 @@ codeunit 50200 "User Customize Manage"
             DistributionLine.Validate(Year, Year);
             DistributionLine.Validate(Month, Month);
             DistributionLine.Validate("Shortcut Dimension 1 Code", DimensionValue.Code);
-            DistributionLine.Validate("Shortcut Dimension 2 Code", DimensionValue."Shortcut Dimension 2 Code");
+            // DistributionLine.Validate("Shortcut Dimension 2 Code", DimensionValue."Shortcut Dimension 2 Code");
             DistributionLine.Insert(true);
         until DimensionValue.Next() = 0;
 
@@ -1418,6 +1459,9 @@ codeunit 50200 "User Customize Manage"
     var
         FromDistributionLine: Record "Distribution Line";
         ToDistributionLine: Record "Distribution Line";
+        DistributionSubform: Page "Distribution Subfrom";
+        TotalPercentage: Decimal;
+        Caption: Text;
     begin
         if (Confirm('Do you want to copy employee details from previous year and month?', false) = false) then
             exit;
@@ -1439,6 +1483,10 @@ codeunit 50200 "User Customize Manage"
             ToDistributionLine.Validate(Year, Year);
             ToDistributionLine.Validate(Month, Month);
             ToDistributionLine.Validate("Shortcut Dimension 1 Code", FromDistributionLine."Shortcut Dimension 1 Code");
+            ToDistributionLine.Validate("Team leader No.", FromDistributionLine."Team leader No.");
+            ToDistributionLine.Validate("Team Leader", FromDistributionLine."Team Leader");
+            ToDistributionLine.Validate("Manager No.", FromDistributionLine."Manager No.");
+            ToDistributionLine.Validate(Manager, FromDistributionLine.Manager);
             ToDistributionLine.Validate("Shortcut Dimension 2 Code", FromDistributionLine."Shortcut Dimension 2 Code");
             ToDistributionLine.Validate("Shortcut Dimension 3 Code", FromDistributionLine."Shortcut Dimension 3 Code");
             ToDistributionLine.Validate("Shortcut Dimension 3 Two", FromDistributionLine."Shortcut Dimension 3 Two");
@@ -1450,6 +1498,13 @@ codeunit 50200 "User Customize Manage"
             ToDistributionLine.Validate("Percentage Three", FromDistributionLine."Percentage Three");
             ToDistributionLine.Validate("Percentage Four", FromDistributionLine."Percentage Four");
             ToDistributionLine.Validate("Percentage Five", FromDistributionLine."Percentage Five");
+            TotalPercentage := (ToDistributionLine."Percentage One" + ToDistributionLine."Percentage Two" + ToDistributionLine."Percentage Three" + ToDistributionLine."Percentage Four" + ToDistributionLine."Percentage Five");
+            if (TotalPercentage <> 100) then
+                if (TotalPercentage > 100) then
+                    Error('%1 Employee Code Percentage must be equal to 100 But It is greaterthan 100', ToDistributionLine."Shortcut Dimension 1 Code")
+                else
+                    Error('%1 Employee Code Percentage must be equal to 100 But It is Lessthan 100', ToDistributionLine."Shortcut Dimension 1 Code");
+
             ToDistributionLine.Insert(true);
         until FromDistributionLine.Next() = 0;
         Message('Copy from employee details completed.');
@@ -1475,8 +1530,8 @@ codeunit 50200 "User Customize Manage"
         if not DimValue.FindSet() then
             exit;
         repeat
-            DimValue.Year := Year;
-            DimValue.Month := Month;
+            // DimValue.Year := Year;
+            // DimValue.Month := Month;
             DimValue."Distribute Enable" := false;
             DimValue.Modify();
         until DimValue.Next() = 0;
@@ -1484,15 +1539,15 @@ codeunit 50200 "User Customize Manage"
         repeat
             Clear(DimValue);
             DimValue.Get(GeneLedSetup."Shortcut Dimension 1 Code", DistLine."Shortcut Dimension 1 Code");
-            DimValue."Shortcut Dimension 2 Code" := DistLine."Shortcut Dimension 2 Code";
-            DimValue."Shortcut Dimension 3 Code" := DistLine."Shortcut Dimension 3 Code";
-            DimValue."Shortcut Dimension 3 Two" := DistLine."Shortcut Dimension 3 Two";
-            DimValue."Shortcut Dimension 3 Three" := DistLine."Shortcut Dimension 3 Three";
-            DimValue."Percentage One" := DistLine."Percentage One";
-            DimValue."Percentage Two" := DistLine."Percentage Two";
-            DimValue."Percentage Three" := DistLine."Percentage Three";
-            DimValue.Year := Year;
-            DimValue.Month := Month;
+            // DimValue."Shortcut Dimension 2 Code" := DistLine."Shortcut Dimension 2 Code";
+            // DimValue."Shortcut Dimension 3 Code" := DistLine."Shortcut Dimension 3 Code";
+            // DimValue."Shortcut Dimension 3 Two" := DistLine."Shortcut Dimension 3 Two";
+            // DimValue."Shortcut Dimension 3 Three" := DistLine."Shortcut Dimension 3 Three";
+            // DimValue."Percentage One" := DistLine."Percentage One";
+            // DimValue."Percentage Two" := DistLine."Percentage Two";
+            // DimValue."Percentage Three" := DistLine."Percentage Three";
+            // DimValue.Year := Year;
+            // DimValue.Month := Month;
             DimValue."Distribute Enable" := true;
             DimValue.Modify();
         until DistLine.Next() = 0;
@@ -1515,6 +1570,7 @@ codeunit 50200 "User Customize Manage"
         LineNo: Integer;
         MaxRowCount: Integer;
         RowCount: Integer;
+        ProjectFour, ProjectFive : Text;
     begin
         UploadExcelMsg := 'Please select the excel file.';
         UploadIntoStream(UploadExcelMsg, '', '', FromFile, InStm);
@@ -1557,34 +1613,62 @@ codeunit 50200 "User Customize Manage"
             end;
 
             DistributionLine."Shortcut Dimension 1 Code" := ShortcutDimension1Code;
-            DistributionLine."Shortcut Dimension 2 Code" := GetValueAtCell(TempExcelBuffer, RowCount, 4);
-            DistributionLine."Shortcut Dimension 3 Code" := GetValueAtCell(TempExcelBuffer, RowCount, 5);
+            DistributionLine."Team leader No." := GetValueAtCell(TempExcelBuffer, RowCount, 4);
+            DimensionValue.Reset();
+            DimensionValue.SetRange("Dimension Code", 'EMPLOYEE');
+            DimensionValue.SetRange(Code, DistributionLine."Team leader No.");
+            if (DimensionValue.FindFirst() = true) then begin
+                if (DimensionValue."Team Leader" = false) then
+                    Error('Teamleaders %1 boolean should be true on the Dimensions page', DistributionLine."Team leader No.");
+            end;
+
+            DistributionLine."Team Leader" := GetValueAtCell(TempExcelBuffer, RowCount, 5);
+            DistributionLine."Manager No." := GetValueAtCell(TempExcelBuffer, RowCount, 6);
+            DimensionValue.Reset();
+            DimensionValue.SetRange("Dimension Code", 'EMPLOYEE');
+            DimensionValue.SetRange(Code, DistributionLine."Manager No.");
+            if (DimensionValue.FindFirst() = true) then begin
+                if (DimensionValue.Manager = false) then
+                    Error('Managers %1 boolean should be true on the Dimensions page', DistributionLine."Manager No.");
+            end;
+
+            DistributionLine.Manager := GetValueAtCell(TempExcelBuffer, RowCount, 7);
+            DistributionLine."Shortcut Dimension 2 Code" := GetValueAtCell(TempExcelBuffer, RowCount, 8);
+            DistributionLine."Shortcut Dimension 3 Code" := GetValueAtCell(TempExcelBuffer, RowCount, 9);
             Clear(SheetVal);
-            Evaluate(SheetVal, GetValueAtCell(TempExcelBuffer, RowCount, 6));
+            Evaluate(SheetVal, GetValueAtCell(TempExcelBuffer, RowCount, 10));
             DistributionLine."Percentage One" := SheetVal;
             TotalPercentage += SheetVal;
             Clear(SheetVal);
-            DistributionLine."Shortcut Dimension 3 Two" := GetValueAtCell(TempExcelBuffer, RowCount, 7);
-            Evaluate(SheetVal, GetValueAtCell(TempExcelBuffer, RowCount, 8));
+            DistributionLine."Shortcut Dimension 3 Two" := GetValueAtCell(TempExcelBuffer, RowCount, 11);
+            Evaluate(SheetVal, GetValueAtCell(TempExcelBuffer, RowCount, 12));
             DistributionLine."Percentage Two" := SheetVal;
             TotalPercentage += SheetVal;
             Clear(SheetVal);
-            DistributionLine."Shortcut Dimension 3 Three" := GetValueAtCell(TempExcelBuffer, RowCount, 9);
-            Evaluate(SheetVal, GetValueAtCell(TempExcelBuffer, RowCount, 10));
+            DistributionLine."Shortcut Dimension 3 Three" := GetValueAtCell(TempExcelBuffer, RowCount, 13);
+            Evaluate(SheetVal, GetValueAtCell(TempExcelBuffer, RowCount, 14));
             DistributionLine."Percentage Three" := SheetVal;
             TotalPercentage += SheetVal;
             Clear(SheetVal);
-            DistributionLine."Shortcut Dimension 3 Four" := GetValueAtCell(TempExcelBuffer, RowCount, 11);
-            Evaluate(SheetVal, GetValueAtCell(TempExcelBuffer, RowCount, 12));
-            DistributionLine."Percentage Four" := SheetVal;
-            TotalPercentage += SheetVal;
-            Clear(SheetVal);
-            DistributionLine."Shortcut Dimension 3 Five" := GetValueAtCell(TempExcelBuffer, RowCount, 13);
-            Evaluate(SheetVal, GetValueAtCell(TempExcelBuffer, RowCount, 14));
-            DistributionLine."Percentage Five" := SheetVal;
-            TotalPercentage += SheetVal;
-            DistributionLine.Insert(false);
+            ProjectFour := (GetValueAtCell(TempExcelBuffer, 1, 15));
+            if (ProjectFour = 'Project Four') then begin
+                DistributionLine."Shortcut Dimension 3 Four" := GetValueAtCell(TempExcelBuffer, RowCount, 15);
+                Evaluate(SheetVal, GetValueAtCell(TempExcelBuffer, RowCount, 16));
+                DistributionLine."Percentage Four" := SheetVal;
+                TotalPercentage += SheetVal;
+            end;
 
+            ProjectFive := (GetValueAtCell(TempExcelBuffer, 1, 17));
+            if (ProjectFive = 'Project Five') then begin
+                Clear(SheetVal);
+                DistributionLine."Shortcut Dimension 3 Five" := GetValueAtCell(TempExcelBuffer, RowCount, 17);
+                Evaluate(SheetVal, GetValueAtCell(TempExcelBuffer, RowCount, 18));
+                DistributionLine."Percentage Five" := SheetVal;
+                TotalPercentage += SheetVal;
+
+            end;
+
+            DistributionLine.Insert(false);
             if (TotalPercentage <> 100) then
                 Error('%1 Employee Code Total Percentage Must be equal to 100', ShortcutDimension1Code);
 
