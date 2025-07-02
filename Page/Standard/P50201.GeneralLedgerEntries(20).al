@@ -89,8 +89,8 @@ pageextension 50201 GeneralLedgerEntriesEx extends "General Ledger Entries"
                         DisRuleFilter.Modify();
                     end;
                     if AppAssEntryNo then
-                        UserCustManage.UpdateGLEntryAppEntryNo(AssEntryNo, Rec."Document No.", Rec."Global Dimension 2 Code",
-                            Rec."Global Dimension 1 Code", GLAccNo);
+                        UserCustManage.UpdateGLEntryDistEntryNoApplied(AssEntryNo, Rec."Document No.", Rec."Global Dimension 2 Code",
+                            Rec."Global Dimension 1 Code", GLAccNo, Rec."VAT Bus. Posting Group", Rec."VAT Prod. Posting Group", Rec."Gen. Bus. Posting Group", Rec."Gen. Prod. Posting Group");
                     UserCustManage.InitDistributionProjectLine(AssEntryNo, Rec."Document No.", DisRuleFilter."Negative Allocation",
                         Rec."Global Dimension 2 Code", Rec."Global Dimension 1 Code", GLAccNo);
                     Commit();

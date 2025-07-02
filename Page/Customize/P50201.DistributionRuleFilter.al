@@ -587,8 +587,8 @@ page 50201 "Distribution Rule Filter"
 
                     RemAmount := 0;
                     CurrPage.DistributionRule.Page.UpdateAmount(Amount, RemAmount);
-                    UserCustomizedmanage.UpdateGLEntryApplied(GLEntry."Document No.", GLEntry."Global Dimension 2 Code", GLEntry."Global Dimension 1 Code",
-                        Rec."G/L Account No.");
+                    UserCustomizedmanage.TrueUpdateGLEntryDistributioRuleApplied(GLEntry."Document No.", GLEntry."Global Dimension 2 Code", GLEntry."Global Dimension 1 Code",
+                        Rec."G/L Account No.", GLEntry."VAT Bus. Posting Group", GLEntry."VAT Prod. Posting Group", GLEntry."Gen. Bus. Posting Group", GLEntry."Gen. Prod. Posting Group");
                     Message('Amount distributed successfully.');
                 end;
                 // end;
@@ -703,27 +703,25 @@ page 50201 "Distribution Rule Filter"
         CalRemAmount(GLEntry);
         if (RemAmount <> 0) then begin
             Message('Distribution amount not fully applied.');
-            UserCustomizedmanage.UpdateGLEntryUnApplied(GLEntry."Document No.", GLEntry."Global Dimension 2 Code",
-                GLEntry."Global Dimension 1 Code", Rec."G/L Account No.");
+            UserCustomizedmanage.FalseUpdateGLEntryDistributioRuleApplied(GLEntry."Document No.", GLEntry."Global Dimension 2 Code",
+                GLEntry."Global Dimension 1 Code", Rec."G/L Account No.", GLEntry."VAT Bus. Posting Group", GLEntry."VAT Prod. Posting Group", GLEntry."Gen. Bus. Posting Group", GLEntry."Gen. Prod. Posting Group");
         end else begin
-            if (Rec."Sales Invoice" = true) then
+            if (Rec."Sales Invoice" = true) then begin
                 Result := UserCustomizedmanage.CheckBeforeClosingDistributionProjectLinePageAmoutIsUpdateOrNot(Rec);
-
-            if (UserCustomizedmanage.CheckDistProjectExist(Rec."Entry No.") = false) then begin
-                UserCustomizedmanage.UpdateGLEntryUnApplied(GLEntry."Document No.", GLEntry."Global Dimension 2 Code",
-                     GLEntry."Global Dimension 1 Code", Rec."G/L Account No.");
+                UserCustomizedmanage.FalseUpdateGLEntryDistributioRuleApplied(GLEntry."Document No.", GLEntry."Global Dimension 2 Code",
+                     GLEntry."Global Dimension 1 Code", Rec."G/L Account No.", GLEntry."VAT Bus. Posting Group", GLEntry."VAT Prod. Posting Group", GLEntry."Gen. Bus. Posting Group", GLEntry."Gen. Prod. Posting Group");
             end else begin
                 if (Result = 0) then begin
                     IsBooleanProjectLinesAreNotUpdated := true;
                     Message('Please Check the Distribution Project Lines and Amout is Updted are not');
                 end else
-                    UserCustomizedmanage.UpdateGLEntryApplied(GLEntry."Document No.", GLEntry."Global Dimension 2 Code",
-                        GLEntry."Global Dimension 1 Code", Rec."G/L Account No.");
+                    UserCustomizedmanage.TrueUpdateGLEntryDistributioRuleApplied(GLEntry."Document No.", GLEntry."Global Dimension 2 Code",
+                        GLEntry."Global Dimension 1 Code", Rec."G/L Account No.", GLEntry."VAT Bus. Posting Group", GLEntry."VAT Prod. Posting Group", GLEntry."Gen. Bus. Posting Group", GLEntry."Gen. Prod. Posting Group");
             end;
         end;
 
-
         if (IsBooleanProjectLinesAreNotUpdated = false) then begin
+
             CurrPage.Update(true);
         end;
     end;

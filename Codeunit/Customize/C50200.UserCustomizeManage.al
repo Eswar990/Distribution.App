@@ -1189,7 +1189,9 @@ codeunit 50200 "User Customize Manage"
             exit('');
     end;
 
-    procedure UpdateGLEntryApplied(DocNo: Code[20]; DimTwoCode: Code[20]; DimOneCode: Code[20]; GLAccNo: code[20])
+    procedure TrueUpdateGLEntryDistributioRuleApplied(DocNo: Code[20]; DimTwoCode: Code[20]; DimOneCode: Code[20];
+    GLAccNo: code[20]; VATBusPostingGroup: Code[20]; VATProPostingGroup: code[20];
+    GenBuspostingGroup: Code[20]; GenProPostingGroup: code[20])
     var
         GLEntry: Record "G/L Entry";
     begin
@@ -1199,10 +1201,17 @@ codeunit 50200 "User Customize Manage"
         GLEntry.SetFilter("Global Dimension 1 Code", DimOneCode);
         GLEntry.SetFilter("Global Dimension 2 Code", DimTwoCode);
         GLEntry.SetFilter("G/L Account No.", GLAccNo);
-        GLEntry.ModifyAll("Distributio Rule Applied", true);
+        GLEntry.SetFilter("VAT Bus. Posting Group", VATBusPostingGroup);
+        GLEntry.SetFilter("VAT Prod. Posting Group", VATProPostingGroup);
+        GLEntry.SetFilter("Gen. Bus. Posting Group", GenBuspostingGroup);
+        GLEntry.SetFilter("Gen. Prod. Posting Group", GenProPostingGroup);
+        if (GLEntry.FindFirst() = true) then begin
+            GLEntry."Distributio Rule Applied" := true;
+            GLEntry.Modify();
+        end;
     end;
 
-    procedure UpdateGLEntryUnApplied(DocNo: Code[20]; DimTwoCode: Code[20]; DimOneCode: Code[20]; GLAccNo: code[20])
+    procedure FalseUpdateGLEntryDistributioRuleApplied(DocNo: Code[20]; DimTwoCode: Code[20]; DimOneCode: Code[20]; GLAccNo: code[20]; VATBusPostingGroup: Code[20]; VATProPostingGroup: code[20]; GenBuspostingGroup: Code[20]; GenProPostingGroup: code[20])
     var
         GLEntry: Record "G/L Entry";
     begin
@@ -1212,10 +1221,17 @@ codeunit 50200 "User Customize Manage"
         GLEntry.SetFilter("Global Dimension 1 Code", DimOneCode);
         GLEntry.SetFilter("Global Dimension 2 Code", DimTwoCode);
         GLEntry.SetFilter("G/L Account No.", GLAccNo);
-        GLEntry.ModifyAll("Distributio Rule Applied", false);
+        GLEntry.SetRange("VAT Bus. Posting Group", VATBusPostingGroup);
+        GLEntry.SetRange("VAT Prod. Posting Group", VATProPostingGroup);
+        GLEntry.SetRange("Gen. Bus. Posting Group", GenBuspostingGroup);
+        GLEntry.SetRange("Gen. Prod. Posting Group", GenProPostingGroup);
+        if (GLEntry.FindFirst() = true) then begin
+            GLEntry."Distributio Rule Applied" := false;
+            GLEntry.Modify();
+        end;
     end;
 
-    procedure UpdateGLEntryAppEntryNo(EntryNo: Integer; DocNo: Code[20]; DimTwoCode: Code[20]; DimOneCode: Code[20]; GLAccNo: code[20])
+    procedure UpdateGLEntryDistEntryNoApplied(EntryNo: Integer; DocNo: Code[20]; DimTwoCode: Code[20]; DimOneCode: Code[20]; GLAccNo: code[20]; VATBusPostingGroup: code[20]; VATProPostingGroup: code[20]; GenBuspostingGroup: Code[20]; GenProPostingGroup: code[20])
     var
         GLEntry: Record "G/L Entry";
     begin
@@ -1225,7 +1241,14 @@ codeunit 50200 "User Customize Manage"
         GLEntry.SetFilter("Global Dimension 1 Code", DimOneCode);
         GLEntry.SetFilter("Global Dimension 2 Code", DimTwoCode);
         GLEntry.SetFilter("G/L Account No.", GLAccNo);
-        GLEntry.ModifyAll("Dist. Entry No Applied", EntryNo);
+        GLEntry.SetRange("VAT Bus. Posting Group", VATBusPostingGroup);
+        GLEntry.SetRange("VAT Prod. Posting Group", VATProPostingGroup);
+        GLEntry.SetRange("Gen. Bus. Posting Group", GenBuspostingGroup);
+        GLEntry.SetRange("Gen. Prod. Posting Group", GenProPostingGroup);
+        if (GLEntry.FindFirst() = true) then begin
+            GLEntry."Dist. Entry No Applied" := EntryNo;
+            GLEntry.Modify();
+        end;
     end;
 
     procedure CombineProjectCodeAndAmountThroughAlocationActionFromExcel(AzzDistributionRule: Record "Distribution Rule")
@@ -1312,23 +1335,6 @@ codeunit 50200 "User Customize Manage"
         exit(GLEntry."Credit Amount");
     end;
 
-    // local procedure GetEmployeeCount(DimValueTwoCode: Code[20]; DimValueThreeCode: Code[20]): Integer
-    // var
-    //     DimValue: Record "Dimension Value";
-    //     EmpCount: Integer;
-    // begin
-    //     DimValue.SetRange("Shortcut Dimension 2 Code", DimValueTwoCode);
-    //     DimValue.SetRange("Distribute Enable", true);
-    //     DimValue.SetRange("Shortcut Dimension 3 Code", DimValueThreeCode);
-    //     EmpCount := DimValue.Count();
-    //     DimValue.SetRange("Shortcut Dimension 3 Code");
-    //     DimValue.SetRange("Shortcut Dimension 3 Two", DimValueThreeCode);
-    //     EmpCount += DimValue.Count();
-    //     DimValue.SetRange("Shortcut Dimension 3 Two");
-    //     DimValue.SetRange("Shortcut Dimension 3 Three", DimValueThreeCode);
-    //     EmpCount += DimValue.Count();
-    //     exit(EmpCount);
-    // end;
 
 
     procedure UpdateDistAmountManually(var DistRuleFilter: Record "Distribution Rule Filter"; FilterVal: Integer)

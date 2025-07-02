@@ -10,7 +10,7 @@ report 50201 "Distribution Analysis"
         dataitem(DistributionRule; "Distribution Rule")
         {
             RequestFilterFields = "Posting Date", "G/L Account No.", "Shortcut Dimension 2 Code",
-                 "Shortcut Dimension 3 Code", "Shortcut Dimension 1 Code", "Document No.", "Team Leader No.", "Manager No.";
+                 "Shortcut Dimension 3 Code", "Shortcut Dimension 1 Code", "Document No.", "Team Leader No.", "Manager No.", "Company Name";
 
             trigger OnPreDataItem()
             begin
@@ -43,7 +43,7 @@ report 50201 "Distribution Analysis"
             begin
                 Clear(TempDistRule);
                 TempDistRule.SetCurrentKey("G/L Account No.", "Posting Date",
-                    "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Shortcut Dimension 3 Code", "Document No.", "Entry No.", "Team Leader No.", "Manager No.");
+                    "Shortcut Dimension 1 Code", "Shortcut Dimension 2 Code", "Shortcut Dimension 3 Code", "Document No.", "Entry No.", "Team Leader No.", "Manager No.", "Company Name");
             end;
         }
         dataitem(IntegerLoop; Integer)

@@ -107,15 +107,15 @@ page 50208 "Distribution Entries"
                     Rec.TestField("Distribution Required", true);
                     Rec.TestField("Global Dimension 1 Code", '');
                     Clear(AppAssEntryNo);
-                    if Rec.Amount = 0 then
+                    if ((Rec.Amount = 0) = true) then
                         exit;
 
-                    if Rec."Dist. Entry No Applied" = 0 then begin
+                    if ((Rec."Dist. Entry No Applied" = 0) = true) then begin
                         AssEntryNo := Rec."Entry No.";
                         AppAssEntryNo := true;
-                    end
-                    else
+                    end else
                         AssEntryNo := Rec."Dist. Entry No Applied";
+
                     if not DisRuleFilter.Get(AssEntryNo) then begin
                         Clear(DisRuleFilter);
                         DisRuleFilter.Init();
@@ -177,20 +177,21 @@ page 50208 "Distribution Entries"
                     end;
 
                     if ((DisRuleFilter."Sales Invoice") = true) then begin
-                        if (AppAssEntryNo) then
-                            UserCustomizeManage.UpdateGLEntryAppEntryNo(AssEntryNo, Rec."Document No.", '',
-                                '', GLAccNo);
+                        if ((AppAssEntryNo) = true) then
+                            UserCustomizeManage.UpdateGLEntryDistEntryNoApplied(AssEntryNo, Rec."Document No.", '',
+                                '', GLAccNo, Rec."VAT Bus. Posting Group", Rec."VAT Prod. Posting Group", Rec."Gen. Bus. Posting Group", Rec."Gen. Prod. Posting Group");
 
                         UserCustomizeManage.InitDistributionProjectLine(AssEntryNo, Rec."Document No.", DisRuleFilter."Negative Allocation",
                             '', '', '');
                     end else begin
-                        if (AppAssEntryNo) then
-                            UserCustomizeManage.UpdateGLEntryAppEntryNo(AssEntryNo, Rec."Document No.", Rec."Global Dimension 2 Code",
-                                Rec."Global Dimension 1 Code", GLAccNo);
+                        if ((AppAssEntryNo) = true) then
+                            UserCustomizeManage.UpdateGLEntryDistEntryNoApplied(AssEntryNo, Rec."Document No.", Rec."Global Dimension 2 Code",
+                                Rec."Global Dimension 1 Code", GLAccNo, Rec."VAT Bus. Posting Group", Rec."VAT Prod. Posting Group", Rec."Gen. Bus. Posting Group", Rec."Gen. Prod. Posting Group");
 
                         UserCustomizeManage.InitDistributionProjectLine(AssEntryNo, Rec."Document No.", DisRuleFilter."Negative Allocation",
                             Rec."Global Dimension 2 Code", Rec."Global Dimension 1 Code", GLAccNo);
                     end;
+
                     Commit();
                     Clear(DisRuleFilter);
                     DisRuleFilter.SetRange("Entry No.", AssEntryNo);
@@ -199,28 +200,6 @@ page 50208 "Distribution Entries"
                     DisRulePageFilter.SetRecord(DisRuleFilter);
                     DisRulePageFilter.Editable(true);
                     DisRulePageFilter.RunModal();
-                end;
-            }
-            action("Copy Distribution Entries")
-            {
-                ApplicationArea = All;
-                Image = Copy;
-                Promoted = true;
-                PromotedCategory = Process;
-                trigger OnAction()
-                var
-                    GLEntry: Record "G/L Entry";
-                begin
-                    GLEntry.Reset();
-                    GLEntry.CalcFields("Account Category");
-                    GLEntry.SetFilter("Account Category", '%1|%2', GLEntry."Account Category"::Income, GLEntry."Account Category"::Expense);
-                    if (GLEntry.FindSet(false) = true) then begin
-                        repeat
-                        // UserCustomizeManage.CopyDistributionRuleValues(GLEntry."Entry No.");
-                        until GLEntry.Next() = 0;
-                        Message('Succesfully Distribution Lines are Copied');
-                    end;
-
                 end;
             }
         }

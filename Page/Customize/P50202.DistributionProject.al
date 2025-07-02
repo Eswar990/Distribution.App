@@ -102,8 +102,8 @@ page 50202 "Distribution Project"
                     GLEntry.Get(Rec."Entry No.");
                     CalRemAmount(GLEntry);
                     if RemAmount = 0 then
-                        UserCustManage.UpdateGLEntryApplied(GLEntry."Document No.", DisRuleFilter."Dimension Value",
-                             GLEntry."Global Dimension 1 Code", DisRuleFilter."G/L Account No.");
+                        UserCustManage.TrueUpdateGLEntryDistributioRuleApplied(GLEntry."Document No.", DisRuleFilter."Dimension Value",
+                             GLEntry."Global Dimension 1 Code", DisRuleFilter."G/L Account No.", GLEntry."VAT Bus. Posting Group", GLEntry."VAT Prod. Posting Group", GLEntry."Gen. Bus. Posting Group", GLEntry."Gen. Prod. Posting Group");
                     CurrPage.Update(true);
                 end;
 

@@ -55,8 +55,8 @@ page 50200 "Distribution Rule"
                         end;
 
                         if RemAmount = 0 then
-                            UserCustomizedmanage.UpdateGLEntryApplied(GLEntry."Document No.", DistributionRuleFilter."Dimension Value",
-                                 GLEntry."Global Dimension 1 Code", DistributionRuleFilter."G/L Account No.");
+                            UserCustomizedmanage.TrueUpdateGLEntryDistributioRuleApplied(GLEntry."Document No.", DistributionRuleFilter."Dimension Value",
+                                 GLEntry."Global Dimension 1 Code", DistributionRuleFilter."G/L Account No.", GLEntry."VAT Bus. Posting Group", GLEntry."VAT Prod. Posting Group", GLEntry."Gen. Bus. Posting Group", GLEntry."Gen. Prod. Posting Group");
                         CurrPage.Update(true);
                     end;
                 }
@@ -161,20 +161,10 @@ page 50200 "Distribution Rule"
                     GLEntry.Get(Rec."Entry No.");
                     CalRemAmount(GLEntry);
                     if RemAmount = 0 then
-                        UserCustomizedmanage.UpdateGLEntryApplied(GLEntry."Document No.", DisRuleFilter."Dimension Value",
-                             GLEntry."Global Dimension 1 Code", DisRuleFilter."G/L Account No.");
+                        UserCustomizedmanage.TrueUpdateGLEntryDistributioRuleApplied(GLEntry."Document No.", DisRuleFilter."Dimension Value",
+                             GLEntry."Global Dimension 1 Code", DisRuleFilter."G/L Account No.", GLEntry."VAT Bus. Posting Group", GLEntry."VAT Prod. Posting Group", GLEntry."Gen. Bus. Posting Group", GLEntry."Gen. Prod. Posting Group");
 
                     CurrPage.Update(true);
-                end;
-            }
-            action("Import Distribution Rule Lines")
-            {
-                ApplicationArea = All;
-                Image = UpdateDescription;
-                Visible = IsVisible;
-
-                trigger OnAction()
-                begin
                 end;
             }
         }
