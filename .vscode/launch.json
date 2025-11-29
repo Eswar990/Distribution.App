@@ -7,7 +7,7 @@
             "type": "al",
             "environmentType": "Sandbox",
             // "environmentName": "AzziteTest_07042023",
-            // "environmentName": "NewAzziteTest_06012024",
+            // "environmentName": "Copy_Company_040425", EswarTestEnv20240129
             "environmentName": "EswarTestEnv20240129",
             // "environmentName": "Sandbox2025",
             "startupObjectId": 50208,
